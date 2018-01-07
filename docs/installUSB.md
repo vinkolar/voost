@@ -1,4 +1,7 @@
-# Configuring BLED112 dongle
+# Overview
+BLED112 dongle with ```pygatt``` currently does not work without modifications on macOS. This document mentions a fix to get the BLED112 dongle woring on macOS.
+
+# Steps
 * Buy the BLED112 dongle [Bluegiga USB Dongle](https://www.amazon.com/gp/product/B00HKILG1W). Its around $18 incl. shipping (in US)
 * Plug it into the Mac book (my mac book: MacOS High Sierra, version 10.13.2)
 * Make sure the device is detected
@@ -123,4 +126,4 @@
       DEBUG:pygatt.backends.bgapi.bgapi:Expecting a response of one of [<ResponsePacketType.gap_end_procedure: 61>] within 1.000000s
       DEBUG:pygatt.backends.bgapi.bgapi:Received a ResponsePacketType.gap_end_procedure packet: Device in wrong state
       ```
-* Note down the serial port on which the BLED112 is connected. In the above case it is `/dev/cu.usbmodem1`.
+* In the output above, note down the serial port on which the BLED112 is connected. In the above case it is `/dev/cu.usbmodem1`

@@ -1,0 +1,116 @@
+# Overview
+This document explains how to get the MAC address of Lego Boost. We need the MAC address to communicate with it. The MAC address will be a six hex numbers (like ```00:16:53:A8:0B:B0```).
+
+We will use the ```bglib``` scanner to sniff the MAC address of the Lego Boost. If you already have the MAC address (through some form of Lego documents/instructions), you can use it and skip the below steps
+
+# Steps
+We will first sniff the MAC addresses of all bluetooth devices when the Lego boost is *off*. We will then turn on the Lego boost and sniff all bluetooth devices around. This helps is to isolate the MAC address of the Lego boost.
+
+1. Make sure Lego boost is turned off
+2. Go to the directory where ```bglib``` was cloned. See [README.md](../README.md) on installing
+3. Note down the path in which the BLED112 device was found (e.g., ```/dev/cu.usbmodem1```). We will need this path. To get the exact path, please see [Getting USB configured](./installUSB.md)
+4. There is a file to scan bluetooth devices: ```Python3/Examples/bled112_scanner.py```. Lets run that to see the bluetooth devices
+5. Run the command
+   ```bash
+   python3 Python3/Examples/bled112_scanner.py -p /dev/cu.usbmodem1
+   ```
+6. You should get an output like below. The 4th column in the table are the MAC address of various bluetooth device seen. Keep track of all unique MAC addresses seen in this scan. These will be the MAC of existing bluetooth device except the Lego boost (since we have not yet turned the boost on)
+	```bash
+	Vinays-MacBook:bglib vinkolar$ python3 Python3/Examples/bled112_scanner.py -p /dev/cu.usbmodem1
+	================================================================
+	BLED112 Scanner for Python v2013-04-07
+	================================================================
+	Serial port:	/dev/cu.usbmodem1
+	Baud rate:	115200
+	Scan interval:	200 (250.00 ms)
+	Scan window:	200 (250.00 ms)
+	Scan type:	Passive
+	UUID filters:	
+	None
+	MAC filter(s):	
+	None
+	RSSI filter:	
+	None
+	Display fields:	-
+	Time
+			- RSSI
+			- Packet type
+			- Sender MAC
+			- Address type
+			- Bond status
+			- Payload data
+	Friendly mode:	Disabled
+	----------------------------------------------------------------
+	Starting scan for BLE advertisements...
+	1515351387.786 -85 0 67052C53CBDA 1 255 02011A1107FC9DD0B3CB84E0840642F3F7E1E0BFCB
+	1515351387.860 -69 0 5CF938D65DCE 0 255 02011A0BFF4C0009060349C0A80107
+	1515351387.897 -76 0 67052C53CBDA 1 255 02011A1107FC9DD0B3CB84E0840642F3F7E1E0BFCB
+	1515351387.985 -90 0 40D9535CC804 1 255 02010613FF4C000C0E00C6077EBAEF66C8CF94B81A2868
+	1515351387.999 -72 0 67052C53CBDA 1 255 02011A1107FC9DD0B3CB84E0840642F3F7E1E0BFCB
+	1515351388.038 -73 0 5CF938D65DCE 0 255 02011A0BFF4C0009060349C0A80107
+	1515351388.110 -85 0 67052C53CBDA 1 255 02011A1107FC9DD0B3CB84E0840642F3F7E1E0BFCB
+	1515351388.169 -90 0 40D9535CC804 1 255 02010613FF4C000C0E00C6077EBAEF66C8CF94B81A2868
+	1515351388.217 -69 0 5CF938D65DCE 0 255 02011A0BFF4C0009060349C0A80107
+	1515351388.327 -76 0 67052C53CBDA 1 255 02011A1107FC9DD0B3CB84E0840642F3F7E1E0BFCB
+	1515351388.423 -72 0 67052C53CBDA 1 255 02011A1107FC9DD0B3CB84E0840642F3F7E1E0BFCB
+	1515351388.535 -85 0 67052C53CBDA 1 255 02011A1107FC9DD0B3CB84E0840642F3F7E1E0BFCB
+	1515351388.754 -87 0 67052C53CBDA 1 255 02011A1107FC9DD0B3CB84E0840642F3F7E1E0BFCB
+	1515351388.766 -72 0 5CF938D65DCE 0 255 02011A0BFF4C0009060349C0A80107
+	1515351388.855 -69 0 67052C53CBDA 1 255 02011A1107FC9DD0B3CB84E0840642F3F7E1E0BFCB
+	1515351388.952 -69 0 5CF938D65DCE 0 255 02011A0BFF4C0009060349C0A80107
+	1515351388.965 -75 0 67052C53CBDA 1 255 02011A1107FC9DD0B3CB84E0840642F3F7E1E0BFCB
+	1515351389.074 -72 0 67052C53CBDA 1 255 02011A1107FC9DD0B3CB84E0840642F3F7E1E0BFCB
+	1515351389.075 -90 0 40D9535CC804 1 255 02010613FF4C000C0E00C6077EBAEF66C8CF94B81A2868
+	1515351389.136 -72 0 5CF938D65DCE 0 255 02011A0BFF4C0009060349C0A80107
+	1515351389.173 -72 0 67052C53CBDA 1 255 02011A1107FC9DD0B3CB84E0840642F3F7E1E0BFCB
+	1515351389.259 -91 0 40D9535CC804 1 255 02010613FF4C000C0E00C6077EBAEF66C8CF94B81A2868
+	```
+7. Now turn on the Lego boost, and before it switches off (when its LED is still blinking) run the same command as above again. You will again have a new input (similar structure as below). The output from the new scan, for me, looked as follows
+	```bash
+	Vinays-MacBook:bglib vinkolar$ python3 Python3/Examples/bled112_scanner.py -p /dev/cu.usbmodem1
+	================================================================
+	BLED112 Scanner for Python v2013-04-07
+	================================================================
+	Serial port:    /dev/cu.usbmodem1
+	Baud rate:      115200
+	Scan interval:  200 (250.00 ms)
+	Scan window:    200 (250.00 ms)
+	Scan type:      Passive
+	UUID filters:
+	None
+	MAC filter(s):
+	None
+	RSSI filter:
+	None
+	Display fields: -
+	Time
+					- RSSI
+					- Packet type
+					- Sender MAC
+					- Address type
+					- Bond status
+					- Payload data
+	Friendly mode:  Disabled
+	----------------------------------------------------------------
+	Starting scan for BLE advertisements...
+	1515352886.431 -87 0 434AC8E611BC 1 255 02011A1107FC9DD0B3CB84E0840642F3F7E1E0BFCB
+	1515352886.490 -50 0 001653A80BB0 0 255 09FF9703004006FE4100020106110723D1BCEA5F782316DEEF121223160000
+	1515352886.538 -49 0 001653A80BB0 0 255 09FF9703004006FE4100020106110723D1BCEA5F782316DEEF121223160000
+	1515352886.584 -55 0 001653A80BB0 0 255 09FF9703004006FE4100020106110723D1BCEA5F782316DEEF121223160000
+	1515352886.606 -87 0 7202327C18EF 1 255 02011A1107FC9DD0B3CB84E0840642F3F7E1E0BFCB
+	1515352886.630 -55 0 001653A80BB0 0 255 09FF9703004006FE4100020106110723D1BCEA5F782316DEEF121223160000
+	1515352886.691 -47 0 001653A80BB0 0 255 09FF9703004006FE4100020106110723D1BCEA5F782316DEEF121223160000
+	1515352886.727 -47 0 001653A80BB0 0 255 09FF9703004006FE4100020106110723D1BCEA5F782316DEEF121223160000
+	1515352886.787 -47 0 001653A80BB0 0 255 09FF9703004006FE4100020106110723D1BCEA5F782316DEEF121223160000
+	1515352886.836 -49 0 001653A80BB0 0 255 09FF9703004006FE4100020106110723D1BCEA5F782316DEEF121223160000
+	1515352886.883 -50 0 001653A80BB0 0 255 09FF9703004006FE4100020106110723D1BCEA5F782316DEEF121223160000
+	1515352886.884 -90 0 5CF938D65DCE 0 255 02011A0BFF4C0009060349C0A80107
+	1515352886.934 -55 0 001653A80BB0 0 255 09FF9703004006FE4100020106110723D1BCEA5F782316DEEF121223160000
+	1515352886.984 -55 0 001653A80BB0 0 255 09FF9703004006FE4100020106110723D1BCEA5F782316DEEF121223160000
+	1515352887.030 -91 0 7202327C18EF 1 255 02011A1107FC9DD0B3CB84E0840642F3F7E1E0BFCB
+	1515352887.032 -55 0 001653A80BB0 0 255 09FF9703004006FE4100020106110723D1BCEA5F782316DEEF121223160000
+	1515352887.077 -67 0 5CF938D65DCE 0 255 02011A0BFF4C0009060349C0A80107
+	1515352887.078 -47 0 001653A80BB0 0 255 09FF9703004006FE4100020106110723D1BCEA5F782316DEEF121223160000
+	1515352887.137 -47 0 001653A80BB0 0 255 09FF9703004006FE4100020106110723D1BCEA5F782316DEEF121223160000
+	```
+8.  The MAC address that is present in the second trace, but not in the first trace is the MAC address of the Lego boost. In the above example it is "001653A80BB0". *Note down this number in the mac hex format (```00:16:53:A8:0B:B0```)*
