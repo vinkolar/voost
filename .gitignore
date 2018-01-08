@@ -102,3 +102,6 @@ ENV/
 
 # vs code
 .vscode
+
+# Dont put any private credentials
+config/private/*

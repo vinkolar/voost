@@ -35,7 +35,7 @@ This project helps to control Lego Boost on macOS using python3
     mymovehub.subscribe_all()
     ...
     ```
-* There is just one more glitch you may experience when running pyb00st examples. ```pyb00st``` assumes that you use ```gatttool```, and hence in one place refers directly to . Note that on macOS, we use BGAPI adapter instead of GATT. Currently please use [this temporary fix](https://github.com/JorgePe/pyb00st/issues/7) in ```pyb00st```
+* There is just one more glitch you may experience when running pyb00st examples. ```pyb00st``` assumes that you use ```gatttool```. Note that on macOS, we use BGAPI adapter instead of GATT (we are using BGAPI backend instead of GATTTool backend). Currently please use [this temporary fix](https://github.com/JorgePe/pyb00st/issues/7) in ```pyb00st```
 * Try all examples from pyb00st, and let me know if you face any problem in enabling python over Lego boost on macOS
 
 # Disclaimer:
