@@ -73,7 +73,7 @@ def try_move_hub(my_movehub, motor, time_ms, dutycycle_pct, say_error = False):
 
 
 def get_user_name():
-    say("Hi, This is Voost. Today we will do something intresting. What is your name?")
+    say("Hi, This is Voost. Today we will do something interesting. What is your name?")
     user_name = get_voice_command()
     
     while(True):
@@ -92,11 +92,11 @@ def say_dint_understand(text_said):
 
 def say_instructions():
     say("I can act on the following commands")
-    time.sleep(1)
+    time.sleep(0.5)
     say("First command is {}".format(GO_FORWARD_STR))
-    time.sleep(1)
+    time.sleep(0.5)
     say("Second command is {}".format(GO_BACK_STR))
-    time.sleep(1)
+    time.sleep(0.5)
     say("Third command is {}".format(STOP_LEGO_STR))
 
 def go_forward_command(my_movehub):

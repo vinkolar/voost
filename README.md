@@ -14,6 +14,10 @@ This project helps to control Lego Boost on macOS using python3
   ```bash
   git clone https://github.com/jrowberg/bglib.git
   ```
+* Install SpeechRecognition (https://pypi.python.org/pypi/SpeechRecognition/)
+  ```bash
+  pip3 install SpeechRecognition
+  ```
 * Install this project.  Go to the directory where you want to clone ```voost```, and use the below command for cloning.
   ```bash
   git clone https://github.com/vinkolar/voost.git
