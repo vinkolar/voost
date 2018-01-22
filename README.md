@@ -1,5 +1,18 @@
 # voost
-This project helps to control Lego Boost on macOS using python3
+Voost project creates a Voice activated Lego boost using bluetooth connectivity and [Google Speech API](https://cloud.google.com/speech/) (and [Speech Recognition](https://pypi.python.org/pypi/SpeechRecognition/)). 
+
+The main goal is to first have a conversational interface where humans can talk to lego. Currently we are far from it. Voost currently acts on the following simple commands using voice input:
+* Go forward
+* Go back
+* Stop lego
+
+In addition, it also has some voice interface to prompt for user's name, and sort of other miscellaneous things.
+
+Limitations: 
+* Voost now works only on Lego Boost on macOS using python3
+* Need to buy a bluetooth BLED device to communicate
+
+Try it and let me know how it works.
 
 # Getting started and installation
 * [Install pygatt](https://github.com/peplin/pygatt). This helps us to communicate via bluetooth. We will slightly modify the source code to make it work on macOS
@@ -24,7 +37,7 @@ This project helps to control Lego Boost on macOS using python3
     ```bash
     pip3 install pyaudio
     ```
-  * SpeechRecognition (https://pypi.python.org/pypi/SpeechRecognition/)
+  * Install [SpeechRecognition](https://pypi.python.org/pypi/SpeechRecognition/)
     ```bash
     pip3 install SpeechRecognition
     ```
@@ -50,7 +63,13 @@ This project helps to control Lego Boost on macOS using python3
     ...
     ```
 * There is just one more glitch you may experience when running pyb00st examples. ```pyb00st``` assumes that you use ```gatttool```. Note that on macOS, we use BGAPI adapter instead of GATT (we are using BGAPI backend instead of GATTTool backend). Currently please use [this temporary fix](https://github.com/JorgePe/pyb00st/issues/7) in ```pyb00st```
-* Try all examples from pyb00st, and let me know if you face any problem in enabling python over Lego boost on macOS
+* Try all examples from pyb00st
+* Now, try the voice activated lego boost using the coommand below:
+```bash
+Vinays-MacBook:voost vinkolar$ python3 test/voice_actions.py
+```
+
+Let me know if you face any problem in enabling python over Lego boost on macOS
 
 # Disclaimer:
 LEGO and BOOST are Trademarks from The LEGO Company, which does not support this project. I am not responsible for any damage on your LEGO BOOST devices. (disclaimer copied and modified from pyb00st)
