@@ -7,7 +7,7 @@ from sensor import boost
 from actors.user import User
 from actors import robot
 
-EXPERT_MODE = True
+EXPERT_MODE = False
 MY_MOVEHUB_ADD = '00:16:53:A8:0B:B0'
 MY_MOVEHUB_MODE = 'Auto'
 MY_BTCTRLR_HCI = 'hci0'
