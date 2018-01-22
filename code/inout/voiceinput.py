@@ -4,7 +4,8 @@ import logging
 logger = logging.getLogger(__name__)
 
 class GoogleVoiceInput:
-    def __init__(self):
+    def __init__(self, output=None):
+        self.set_output(output)
         pass
 
     def set_output(self, output):

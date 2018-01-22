@@ -7,6 +7,7 @@ from sensor import boost
 from actors.user import User
 from actors import robot
 
+EXPERT_MODE = True
 MY_MOVEHUB_ADD = '00:16:53:A8:0B:B0'
 MY_MOVEHUB_MODE = 'Auto'
 MY_BTCTRLR_HCI = 'hci0'
@@ -14,10 +15,10 @@ MY_BTCTRLR_HCI = 'hci0'
 class VoostTalk:
 
     def __init__(self):
-        self.inp = voiceinput.GoogleVoiceInput()
         self.out = voiceoutput.OsXVoiceOutput()
+        self.inp = voiceinput.GoogleVoiceInput(self.out)
         self.voost = boost.Boost(MY_MOVEHUB_ADD, mode=MY_MOVEHUB_MODE, hci=MY_BTCTRLR_HCI)
-        self.user = User()
+        self.user = User(self.out, self.inp)
         self.boost_inited = self.init_boost()
         if(self.boost_inited):
             self.user_inited = self.init_user()
@@ -39,31 +40,32 @@ class VoostTalk:
 
     def init_user(self):
         time.sleep(1)
-        self.user.init()
+        self.user.init(prompt=True)
         if(self.user.username is not None):
             self.output_instructions()
             self.listen_to_voice_and_act()
         return True
 
     def output_instructions(self):
-        self.out.output("I can act on the following commands")
-        time.sleep(0.5)
-        self.out.output("First command is {}".format(robot.GO_FORWARD_STR))
-        time.sleep(0.5)
-        self.out.output("Second command is {}".format(robot.GO_BACK_STR))
-        time.sleep(0.5)
-        self.out.output("Third command is {}".format(robot.STOP_LEGO_STR))
+        if(not EXPERT_MODE):
+            self.out.output("I can act on the following commands")
+            time.sleep(0.5)
+            self.out.output("First command is {}".format(robot.GO_FORWARD_STR))
+            time.sleep(0.5)
+            self.out.output("Second command is {}".format(robot.GO_BACK_STR))
+            time.sleep(0.5)
+            self.out.output("Third command is {}".format(robot.STOP_LEGO_STR))
 
     def process_voice_command(self, text_said):
         retval = -2
         if(text_said is not None):
-            if(text_said.lower().startswith(boost.GO_FORWARD_STR.lower())):
+            if(text_said.lower().startswith(robot.GO_FORWARD_STR.lower())):
                 self.voost.go_forward_command()
                 retval = 0
-            elif(text_said.lower().startswith(boost.GO_BACK_STR.lower())):
+            elif(text_said.lower().startswith(robot.GO_BACK_STR.lower())):
                 self.voost.go_back_command()
                 retval = 0
-            elif(text_said.lower().startswith(boost.STOP_LEGO_STR.lower())):
+            elif(text_said.lower().startswith(robot.STOP_LEGO_STR.lower())):
                 self.out.output("Stopping Lego")
                 self.voost.try_stop_movehub()
                 self.out.output("Stoped Lego. Good bye {}".format(self.user.username))

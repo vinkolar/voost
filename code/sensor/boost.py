@@ -27,6 +27,8 @@ class Boost:
     def try_stop_movehub(self):
         if(self.my_movehub is not None):
             try:
+                logger.error("Stopping movehub({},{},{})".format(
+                    self.mac_addr, self.mode, self.hci))
                 self.my_movehub.stop()
             except:
                 err_msg = sys.exc_info()[0]
@@ -48,7 +50,7 @@ class Boost:
         return retval
 
     def go_forward_command(self):
-        self.try_move_hub(self.my_movehub, MOTOR_AB, 2000, 100)
+        self.try_move_hub(MOTOR_AB, 2000, 100)
 
     def go_back_command(self):
-        self.try_move_hub(self.my_movehub, MOTOR_AB, 2000, -100)
+        self.try_move_hub(MOTOR_AB, 2000, -100)
